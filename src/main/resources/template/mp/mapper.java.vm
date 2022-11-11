@@ -1,0 +1,64 @@
+package ${package.Mapper};
+
+import java.util.List;
+import java.util.Map;
+
+import ${package.Entity}.${entity};
+import ${superMapperClassPackage};
+
+/**
+ * <p>
+ * $!{table.comment} Mapper 接口
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+interface ${table.mapperName} : ${superMapperClass}<${entity}>
+#else
+public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+
+
+    /**
+     * 新增$!{table.comment}数据
+     *
+     * @author ${author}
+     * @Date ${date}
+     */
+	public void save${entity} (${entity} param);
+
+    /**
+     * 根据主键删除表$!{table.comment}中数据
+     *
+     * @author ${author}
+     * @Date ${date}
+     */
+    public void delete${entity}ById (${entity} param);
+
+    /**
+     * 获取表$!{table.comment}map列表
+     *
+     * @author ${author}
+     * @Date ${date}
+     */
+    List<Map<String, Object>> select${entity}MapList (${entity} param);
+    
+    /**
+     * 根据中主键删除表$!{table.comment}中的数据
+     *
+     * @author ${author}
+     * @Date ${date}
+     */
+    public void update${entity}ById (${entity} param);
+    
+    /**
+     * 获取表$!{table.comment}中的数据总数
+     *
+     * @author ${author}
+     * @Date ${date}
+     */
+    public int get${entity}Count (${entity} param);
+
+}
+#end

@@ -1,0 +1,105 @@
+package ${package.ServiceImpl};
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import com.vianet.dcomsp.common.util.ServiceResult;
+import ${superServiceImplClassPackage};
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+}
+#else
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+	@Autowired
+	${table.mapperName} dtoMapper;
+	
+    @Override
+	@Transactional
+    public ServiceResult<?> save${entity} (${entity} param){
+        ServiceResult<?> result = new ServiceResult<>();
+        try {
+			dtoMapper.save${entity}(param);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return ServiceResult.failure(e.getMessage());
+		}
+		return result;
+    }
+
+    @Override
+	@Transactional
+    public ServiceResult<?> delete${entity}ById (${entity} param){
+        ServiceResult<?> result = new ServiceResult<>();
+        try {
+			dtoMapper.delete${entity}ById(param);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return ServiceResult.failure(e.getMessage());
+		}
+		return result;
+    }
+    
+    @Override
+	@Transactional
+    public ServiceResult<?> select${entity}MapList (${entity} param){
+        ServiceResult<?> result = new ServiceResult<>();
+        try {
+			List<Map<String, Object>> listMap = dtoMapper.select${entity}MapList(param);
+			result = ServiceResult.success(listMap);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return ServiceResult.failure(e.getMessage());
+		}
+		return result;
+    }
+    
+    @Override
+	@Transactional
+    public ServiceResult<?> update${entity}ById (${entity} param){
+        ServiceResult<?> result = new ServiceResult<>();
+        try {
+			dtoMapper.update${entity}ById(param);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return ServiceResult.failure(e.getMessage());
+		}
+		return result;
+    }
+    
+    @Override
+	@Transactional
+    public ServiceResult<?> get${entity}Count (${entity} param){
+        ServiceResult<?> result = new ServiceResult<>();
+        try {
+			int count = dtoMapper.get${entity}Count(param);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("total", count);
+			result = ServiceResult.success(map);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return ServiceResult.failure(e.getMessage());
+		}
+		return result;
+    }
+}
+#end
